@@ -39,8 +39,6 @@ enum layers {
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    static uint16_t eisu_timer;
-    static uint16_t kana_timer;
 
 #ifdef CONSOLE_ENABLE
     uprintf("Key pressed: %u\n", keycode);  // ← これで出力を確認
@@ -49,31 +47,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
     case TO_LAYER_1_KANA:
         if (record->event.pressed) {
-            kana_timer = timer_read();
-            layer_on(2);  // MO(2)相当: レイヤー2をオン
-        } else {
-            layer_off(2);
-            if (timer_elapsed(kana_timer) < TAPPING_TERM) {
-                // レイヤー1に切り替え
-                layer_move(_LAYER1);
-                // 入力モードを「かな」に
-                tap_code(KC_LANGUAGE_1);
-            }
+            // レイヤー1をアクティブにする
+            // 他のレイヤーの状態を変えないためlayer_on/offを使用する
+            layer_on(_LAYER1);
+            // 入力モードを「かな」に
+            tap_code(KC_LANGUAGE_1);
         }
         return false; // Skip all further processing of this key
 
     case TO_LAYER_0_EISU:
         if (record->event.pressed) {
-            eisu_timer = timer_read();
-            register_code(KC_LCTL);  // ホールド用にControlを押す
-        } else {
-            unregister_code(KC_LCTL);
-            if (timer_elapsed(eisu_timer) < TAPPING_TERM) {
-                // レイヤー0に切り替え
-                layer_move(_LAYER0);
-                // 入力モードを「英数」に
-                tap_code(KC_LANGUAGE_2);
-            }
+            // レイヤー0をオンにして、レイヤー1をオフにする
+            layer_on(_LAYER0);
+            layer_off(_LAYER1);
+            // 入力モードを「英数」に
+            tap_code(KC_LANGUAGE_2);
         }
         return false; // Skip all further processing of this key
     }
