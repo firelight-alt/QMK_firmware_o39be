@@ -17,10 +17,10 @@
 #include "keymap_japanese.h"
 #include "os_detection.h"
 #ifdef CONSOLE_ENABLE
-  #include <print.h>
+    #include <print.h>
 #endif
 
-// カスタムキーコードの定義（VIAやRemapの予約領域（0x7E00〜）の最初2つを使用する）
+// カスタムキーコードの定義（VIAやRemapの予約領域（0x7E00〜）の最初3つを使用する）
 enum custom_keycodes {
     TO_LAYER_1_KANA = 0x7E00,
     TO_LAYER_0_EISU = 0x7E01,
@@ -35,7 +35,7 @@ const uint16_t PROGMEM keycodes[] = {
 };
 #endif
 
-// レイヤー定義 とりあえず0〜4を列
+// レイヤー定義 とりあえず0〜4を列挙
 enum layers {
     _LAYER0,    // 英数入力用のレイヤー = 0
     _LAYER1,    // かな入力用のレイヤー = 1
@@ -101,7 +101,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         return false; // Skip all further processing of this key
     }
 
-   return true;
+    return true;
 }
 
 /**
@@ -211,6 +211,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     )
 };
 
+// ホストOSの判別機能を追加
+// ホストOSがmacOSあるいはiOSであった場合は _LAYER4 をアクティブにする
+// その他のOSであった場合はなにもせず、default layerをアクティブにする
 void keyboard_post_init_user(void) {
     wait_ms(400);
     switch (detected_host_os()) {
