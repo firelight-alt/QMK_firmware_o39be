@@ -15,6 +15,7 @@
  */
 #include QMK_KEYBOARD_H
 #include "keymap_japanese.h"
+#include "os_detection.h"
 #ifdef CONSOLE_ENABLE
   #include <print.h>
 #endif
@@ -32,10 +33,13 @@ const uint16_t PROGMEM keycodes[] = {
 };
 #endif
 
-// レイヤー定義
+// レイヤー定義 とりあえず0〜4を列
 enum layers {
     _LAYER0,    // 英数入力用のレイヤー = 0
     _LAYER1,    // かな入力用のレイヤー = 1
+    _LAYER2,    //
+    _LAYER3,    //
+    _LAYER4,    // Mac/iOS用のレイヤー = 4
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -174,3 +178,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, _______,     _______,      _______, _______, _______,  _______
     )
 };
+
+void keyboard_post_init_user(void) {
+    wait_ms(400);
+    switch (detected_host_os()) {
+    case OS_MACOS:
+        layer_on(_LAYER4);
+        break;
+    case OS_IOS:
+        layer_on(_LAYER4);
+        break;
+    default:
+        layer_move(_LAYER0);
+        break;
+    }
+}
