@@ -27,6 +27,12 @@
              "title": "Layer0 + 英数",
             "shortName": "Eisu",
             "keycode": "0x7E01"
+        },
+        {
+            "name": "Layer0 + GUI",
+             "title": "Layer0 + GUI",
+            "shortName": "GUI",
+            "keycode": "0x7E02s"
         }
     ]
 }
