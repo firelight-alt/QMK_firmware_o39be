@@ -17,22 +17,22 @@
     },
     "customKeycodes": [
         {
-           "name": "Layer1 + かな",
-           "title": "Layer1 + かな",
-            "shortName": "Kana",
+          "name": "Layer1オン+かな/MO(2)",
+          "title": "Layer1オン+かな/MO(2)",
+            "shortName": "Kana/MO(2)",
             "keycode": "0x7E00"
         },
         {
-            "name": "Layer0 + 英数",
-             "title": "Layer0 + 英数",
-            "shortName": "Eisu",
-            "keycode": "0x7E01"
+          "name": "Layer1オフ+英数/Ctrl",
+          "title": "Layer1オフ+英数/Ctrl",
+          "shortName": "Eisu/Ctrl",
+          "keycode": "0x7E01"
         },
         {
-            "name": "Layer0 + GUI",
-             "title": "Layer0 + GUI",
-            "shortName": "GUI",
-            "keycode": "0x7E02s"
+          "name": "Layer1オフ+GUI/Ctrl",
+          "title": "Layer1オフ+GUI/Ctrl",
+          "shortName": "GUI/Ctrl",
+          "keycode": "0x7E02s"
         }
     ]
 }
